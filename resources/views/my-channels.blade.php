@@ -29,6 +29,13 @@
                                     <textarea style="width: 100%;" class="form-control" name="desc" id="desc" cols="30" rows="10"></textarea>
                                 </div>
                             </div>
+                            <div class="mb-3 row">
+                                <label for="image" class="text-light col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-10">
+                                    <input required type="file" accept="image/*" class="form-control"
+                                        id="image" name="image">
+                                </div>
+                            </div>
                             <div class="d-flex flex-row justify-content-end">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-primary ms-4">Save</button>

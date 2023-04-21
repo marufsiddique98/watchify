@@ -10,10 +10,16 @@ class Video extends Model
     use HasFactory;
     protected $fillable = [
         'title',
+        'channel_id',
+        'user_id',
         'desc',
+        'slug',
         'thumbnail',
         'thumbnail-path',
         'link',
         'link-path',
+        'likes',
+        'dislikes',
+        'views',
     ];
 }

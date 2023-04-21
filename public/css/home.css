@@ -351,3 +351,7 @@ i{
 .btn-primary{
     background-color: var(--button-bg);
 }
+
+a{
+    text-decoration: none;
+}

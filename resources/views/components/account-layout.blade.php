@@ -14,10 +14,10 @@
                         <a href="{{route('channel.all')}}">My Channels</a>
                     </li>
                     <li>
-                        <a href="my-videos">My Contents</a>
+                        <a href="{{route('video.all')}}">My Contents</a>
                     </li>
                     <li>
-                        <a href="/logout">Log Out</a>
+                        <a method="delete" href="/logout">Log Out</a>
                     </li>
                 </ul>
             </div>

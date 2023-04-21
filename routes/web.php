@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VideoController;
+use App\Models\Channel;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web3AuthController;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,27 +20,54 @@ use App\Http\Controllers\Web3AuthController;
 */
 
 Route::get('/', function () {
-    return view('home');
-});
+    $videos= DB::table('videos')
+    ->join('channels', 'videos.channel_id', '=', 'channels.id')
+    ->select(
+        'channels.name as channel_name',
+        'videos.views as views',
+        'videos.slug as vslug',
+        'channels.slug as cslug',
+        'videos.thumbnail as vthumb',
+        'videos.title as vtitle'
+        )
+    ->get();
+    $channels=Channel::all();
+    return view('home',[
+        'videos'=>$videos,
+        'channels'=>$channels,
+    ]);
+    // return json_encode($videos);
+})->name('home');
+Route::get('/channel/{slug}', function ($slug) {
+    $videos= DB::table('videos')
+    ->join('channels', 'videos.channel_id', '=', 'channels.id')
+    ->select(
+        'channels.name as channel_name',
+        'videos.views as views',
+        'videos.slug as vslug',
+        'channels.slug as cslug',
+        'videos.thumbnail as vthumb',
+        'videos.title as vtitle'
+        )->where('channels.slug',$slug)
+    ->get();
 
-Route::get('/eth/signature', [Web3AuthController::class, 'signature'])->name('metamask.signature');
-Route::post('/eth/authenticate', [Web3AuthController::class, 'authenticate'])->name('metamask.authenticate');
+    $channels=Channel::all();
+    return view('home',[
+        'videos'=>$videos,
+        'channels'=>$channels,
+    ]);
+    // return json_encode($videos);
+})->name('channel');
 
-Route::get('/watch', function () {
-    return view('watch');
-})->name('watch');
+// Route::get('/watch/:slug', function () {
+//     return view('watch');
+// })->name('watch');
+Route::get('/watch/{slug}', [VideoController::class,'watch'])->name('video.watch');
 
 Route::get('/my-profile', function () {
     return view('profile');
 })->name('my.profile')->middleware(['auth', 'verified']);
 
-Route::get('/my-channels', function () {
-    return view('my-channels');
-})->name('my.channels')->middleware(['auth', 'verified']);
-
-Route::get('/my-videos', function () {
-    return view('my-videos');
-})->name('my.videos')->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -48,6 +78,13 @@ Route::group(['prefix'=>'channels'], function(){
     Route::post('/create', [ChannelController::class,'create'])->name('channel.create');
     Route::post('/delete', [ChannelController::class,'delete'])->name('channel.delete');
 });
+Route::group(['prefix'=>'videos'], function(){
+    Route::get('/all', [VideoController::class,'videos'])->name('video.all');
+    Route::post('/create', [VideoController::class,'create'])->name('video.create');
+    Route::post('/comment', [CommentController::class,'comment'])->name('video.comment');
+    Route::post('/delete', [VideoController::class,'delete'])->name('video.delete');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

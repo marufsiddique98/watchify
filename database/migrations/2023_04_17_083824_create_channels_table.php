@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('image');
+            $table->string('image_path');
             $table->text('desc');
             $table->integer('subscribers');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

@@ -5,49 +5,35 @@
           <div class="sidebar__categories">
             <div class="sidebar__category">
               <i class="material-icons">home</i>
-              <span>Home</span>
+              <a href="/"><span>Home</span></a>
             </div>
             <div class="sidebar__category">
               <i class="material-icons">local_fire_department</i>
-              <span>Trending</span>
+              <a href="/"><span>Trending</span></a>
             </div>
-            <div class="sidebar__category">
+            {{-- <div class="sidebar__category">
               <i class="material-icons">subscriptions</i>
               <span>Subcriptions</span>
-            </div>
-            <div class="sidebar__category">
+            </div> --}}
+            {{-- <div class="sidebar__category">
               <i class="material-icons">history</i>
               <span>History</span>
-            </div>
+            </div> --}}
             <div class="sidebar__category">
               <i class="material-icons">play_arrow</i>
-              <span>Your Videos</span>
+              <a href="{{route('video.all')}}"><span>Your Videos</span></a>
             </div>
-            <div class="sidebar__category">
+            {{-- <div class="sidebar__category">
               <i class="material-icons">watch_later</i>
               <span>Watch Later</span>
             </div>
             <div class="sidebar__category">
               <i class="material-icons">thumb_up</i>
               <span>Liked Videos</span>
-            </div>
-          </div>
-          <hr />
-          <div class="sidebar__categories">
-              <h3>Featured Channels</h3>
-            {{-- <div class="sidebar__category">
-              <i class="material-icons">library_add_check</i>
-              <span>Library</span>
             </div> --}}
-
           </div>
           <hr />
-        </div>
-        <!-- Sidebar Ends -->
 
-        <!-- Videos Section -->
-        <div class="videos">
-          <h1>Recommended</h1>
 
           {{$slot}}
         </div>

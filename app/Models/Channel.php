@@ -10,6 +10,8 @@ class Channel extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'image',
+        'image_path',
         'slug',
         'desc',
         'subscribers',

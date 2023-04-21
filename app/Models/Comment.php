@@ -10,5 +10,9 @@ class Comment extends Model
     use HasFactory;
     protected $fillable = [
         'comment',
+        'video_id',
+        'user_id',
+        'likes',
+        'dislikes',
     ];
 }
