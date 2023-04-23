@@ -68,19 +68,19 @@
                                     </div>
                                 </div>
 
-                                <div style="width: 500px;
+                                <div style="width: 100%;
                                 height: 400px;
                                 border: 2px solid black;
                                 position: relative;">
-                                    <video style="width: 500px;
+                                    <video style="width: 100%;
                                     height: 400px;
                                     object-fit: cover;" id="vid"></video>
                                 </div>
 
-                                <div class="d-flex flex-row justify-content-end">
+                                <div class="d-flex flex-row justify-content-end mt-4">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary ms-4">Save</button>
+                                    <button disabled type="submit" class="btn btn-primary ms-4">Upcoming</button>
                                 </div>
                             </form>
                         </div>
@@ -178,7 +178,7 @@
                 <tr>
                     <th>{{ $video->title }}</th>
                     <th>
-                        <img style="width: 200px; aspect-ratio:10/6;" src="{{ $video->thumbnail }}" alt="">
+                        <img style="width: 200px; aspect-ratio:10/6;" src="{{config('app.url') . $video->thumbnail }}" alt="">
                     </th>
                     <th>{{ $video->likes }}</th>
                     <th>{{ $video->dislikes }}</th>

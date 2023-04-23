@@ -69,21 +69,22 @@ Route::get('/my-profile', function () {
 })->name('my.profile')->middleware(['auth', 'verified']);
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::group(['prefix'=>'channels'], function(){
     Route::get('/', [ChannelController::class,'channels'])->name('channel.all');
     Route::post('/create', [ChannelController::class,'create'])->name('channel.create');
     Route::post('/delete', [ChannelController::class,'delete'])->name('channel.delete');
-});
+})->middleware(['auth', 'verified']);
+
 Route::group(['prefix'=>'videos'], function(){
     Route::get('/all', [VideoController::class,'videos'])->name('video.all');
     Route::post('/create', [VideoController::class,'create'])->name('video.create');
     Route::post('/comment', [CommentController::class,'comment'])->name('video.comment');
     Route::post('/delete', [VideoController::class,'delete'])->name('video.delete');
-});
+})->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {

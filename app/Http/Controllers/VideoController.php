@@ -14,7 +14,7 @@ class VideoController extends Controller
 {
 
     public function videos(Request $request):View{
-        $videos=Video::where('user_id',Auth::id());
+        $videos=Video::where('user_id',Auth::id())->get();
         $channels=Channel::where('user_id',Auth::id())->get();
         return view('my-videos',[
             'videos'=>$videos,
@@ -36,20 +36,22 @@ class VideoController extends Controller
         $channel=$request->channel_id;
         // $file=$request->file('video');
         // $file->move('videos',$file->getClientOriginalName());
-        if (!empty($request->thumb)) {
-            $file =$request->file('thumb');
+        $image='';
+        $video='';
+        $file =$request->file('thumb');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.' . $extension;
             $file->move(public_path('thumbs/'.$channel.'/'), $filename);
             $image= 'thumbs/'.$channel.'/'.$filename;
-        }
-        if (!empty($request->video)) {
-            $file =$request->file('video');
+
+
+        $file =$request->file('video');
             $extension = $file->getClientOriginalExtension();
             $filename = time().'.' . $extension;
             $file->move(public_path('videos/'.$channel.'/'), $filename);
             $video= 'videos/'.$channel.'/'.$filename;
-        }
+
+
         $slug = Str::slug($request->title, '-');
 
         $uniqueSlug = $slug;

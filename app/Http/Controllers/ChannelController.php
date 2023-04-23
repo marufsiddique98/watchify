@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Intervention\Image\Image;
+use Exception;
 use Illuminate\Support\Str;
 
 class ChannelController extends Controller
@@ -26,30 +28,29 @@ class ChannelController extends Controller
     public function create(Request $request): RedirectResponse
     {
         $slug = Str::slug($request->name, '-');
-
         $uniqueSlug = $slug;
         $i = 1;
+
         while (Channel::where('slug', $uniqueSlug)->exists()) {
             $uniqueSlug = $slug . '-' . $i++;
         }
-        if (!empty($request->image)) {
-            $file =$request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time().'.' . $extension;
-            $file->move(public_path('images/'), $filename);
-            $image= 'images/'.$filename;
 
-            Channel::create([
-                'name'=>$request->name,
-                'image'=>$image,
-                'image_path'=>'public/'. $image,
-                'slug'=>$uniqueSlug,
-                'desc'=>$request->desc,
-                'subscribers'=>0,
-                'user_id'=>Auth::id(),
-            ]);
-            return back()->with('status', 'Channel Created Successfully');
-        }
+        $file =$request->file('channel_image');
+        $extension = $file->getClientOriginalExtension();
+        $filename = time().'.' . $extension;
+        $file->move(public_path('channel_image/'), $filename);
+        $channel_image= 'channel_image/'.Auth::id().$filename;
+
+        Channel::create([
+            'name'=>$request->name,
+            'image'=>$channel_image,
+            'image_path'=>'public/'. $channel_image,
+            'slug'=>$uniqueSlug,
+            'desc'=>$request->desc,
+            'subscribers'=>0,
+            'user_id'=>Auth::id(),
+        ]);
+        return back()->with('status', 'Channel Created Successfully');
 
         return back()->with('status', 'Channel Cannot be Created');
     }

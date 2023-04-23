@@ -15,7 +15,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{route('channel.create')}}" method="POST">
+                        <form action="{{route('channel.create')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3 row">
                                 <label for="channelName" class="col-sm-2 col-form-label text-light">Name</label>
@@ -33,7 +33,7 @@
                                 <label for="image" class="text-light col-sm-2 col-form-label">Image</label>
                                 <div class="col-sm-10">
                                     <input required type="file" accept="image/*" class="form-control"
-                                        id="image" name="image">
+                                        id="image" name="channel_image">
                                 </div>
                             </div>
                             <div class="d-flex flex-row justify-content-end">
@@ -52,6 +52,7 @@
         <thead>
             <tr>
                 <th scope="col">Name</th>
+                <th scope="col">Image</th>
                 <th scope="col">Subscribers</th>
                 <th scope="col">Custom Url</th>
                 <th scope="col">Actions</th>
@@ -61,6 +62,9 @@
             @foreach ($channels as $c)
             <tr>
                 <td>{{$c->name}}</td>
+                <td>
+                    <img style="width: 200px; aspect-ratio:10/6;" src="{{config('app.url') . $c->image }}" alt="">
+                </td>
                 <td>{{$c->subscribers}}</td>
                 <td>{{$c->slug}}</td>
                 <td>
